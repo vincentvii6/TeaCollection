@@ -23,6 +23,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final int ADD_TEA_REQUEST = 1;
+    public static final int EDIT_TEA_REQUEST = 2;
+
 
     private TeaViewModel teaViewModel;
 
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         buttonAddTea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddTeaActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddEditTeaActivity.class);
                 startActivityForResult(intent, ADD_TEA_REQUEST);
             }
         });
@@ -68,22 +70,53 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Tea Deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new TeaAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Tea tea) {
+                Intent intent = new Intent(MainActivity.this, AddEditTeaActivity.class);
+                intent.putExtra(AddEditTeaActivity.EXTRA_ID, tea.getId());
+                intent.putExtra(AddEditTeaActivity.EXTRA_NAME, tea.getName());
+                intent.putExtra(AddEditTeaActivity.EXTRA_TYPE, tea.getType());
+                intent.putExtra(AddEditTeaActivity.EXTRA_QUANTITY, tea.getQuantity());
+                startActivityForResult(intent, EDIT_TEA_REQUEST);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ADD_TEA_REQUEST && resultCode == RESULT_OK) {
-            String name = data.getStringExtra(AddTeaActivity.EXTRA_NAME);
-            String type = data.getStringExtra(AddTeaActivity.EXTRA_TYPE);
-            int quantity = data.getIntExtra(AddTeaActivity.EXTRA_QUANTITY, 1);
+            String name = data.getStringExtra(AddEditTeaActivity.EXTRA_NAME);
+            String type = data.getStringExtra(AddEditTeaActivity.EXTRA_TYPE);
+            int quantity = data.getIntExtra(AddEditTeaActivity.EXTRA_QUANTITY, 1);
 
             Tea tea = new Tea(name, type, quantity);
             teaViewModel.insert(tea);
 
             Toast.makeText(this, "Tea Saved", Toast.LENGTH_SHORT).show();
 
-        } else {
+        }
+        else if (requestCode == EDIT_TEA_REQUEST && resultCode == RESULT_OK) {
+           int id = data.getIntExtra(AddEditTeaActivity.EXTRA_ID, -1);
+
+           if (id == -1) {
+               Toast.makeText(this, "Tea can't be updated", Toast.LENGTH_SHORT).show();
+               return;
+           }
+
+            String name = data.getStringExtra(AddEditTeaActivity.EXTRA_NAME);
+            String type = data.getStringExtra(AddEditTeaActivity.EXTRA_TYPE);
+            int quantity = data.getIntExtra(AddEditTeaActivity.EXTRA_QUANTITY, 1);
+
+            Tea tea = new Tea(name, type, quantity);
+            tea.setId(id);
+            teaViewModel.update(tea);
+
+            Toast.makeText(this, "Tea updated", Toast.LENGTH_SHORT).show();
+        }
+        else {
             Toast.makeText(this, "Tea Not Saved", Toast.LENGTH_SHORT).show();
         }
     }

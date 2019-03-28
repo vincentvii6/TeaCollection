@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
     private List<Tea> teas = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -56,6 +57,26 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
             textViewName = itemView.findViewById(R.id.text_view_name);
             textViewType = itemView.findViewById(R.id.text_view_type);
             textViewQuantity = itemView.findViewById(R.id.text_view_quantity);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(teas.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    // Edit Tea
+
+    public interface OnItemClickListener {
+        void onItemClick(Tea tea);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

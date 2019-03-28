@@ -11,7 +11,9 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
-public class AddTeaActivity extends AppCompatActivity {
+public class AddEditTeaActivity extends AppCompatActivity {
+    public static final String EXTRA_ID =
+            "com.djtasty.teacollection.EXTRA_ID";
     public static final String EXTRA_NAME =
             "com.djtasty.teacollection.EXTRA_NAME";
     public static final String EXTRA_TYPE =
@@ -37,7 +39,20 @@ public class AddTeaActivity extends AppCompatActivity {
         numberPickerQuantity.setMaxValue(20);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Note");
+
+        Intent intent = getIntent();
+
+        if (intent.hasExtra(EXTRA_ID)) {
+            setTitle("Edit Tea");
+            editTextName.setText(intent.getStringExtra(EXTRA_NAME));
+            editTextType.setText(intent.getStringExtra(EXTRA_TYPE));
+            numberPickerQuantity.setValue(intent.getIntExtra(EXTRA_QUANTITY, 1));
+        }
+        else {
+            setTitle("Add Tea");
+        }
+
+
     }
 
     private void saveTea() {
@@ -54,6 +69,11 @@ public class AddTeaActivity extends AppCompatActivity {
         data.putExtra(EXTRA_NAME, name);
         data.putExtra(EXTRA_TYPE, type);
         data.putExtra(EXTRA_QUANTITY, quantity);
+
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1) {
+            data.putExtra(EXTRA_ID, id);
+        }
 
         setResult(RESULT_OK, data);
         finish();
