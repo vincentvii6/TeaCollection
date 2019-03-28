@@ -41,6 +41,10 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
         notifyDataSetChanged();
     }
 
+    public Tea getTeaAt(int position) {
+        return teas.get(position);
+    }
+
     class TeaHolder extends RecyclerView.ViewHolder {
         private TextView textViewName;
         private TextView textViewType;
