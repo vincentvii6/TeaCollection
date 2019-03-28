@@ -22,15 +22,15 @@ public class TeaRepository {
     }
 
     public void update(Tea tea) {
-        new InsertTeaAsycnTask(teaDao).execute(tea);
+        new UpdateTeaAsycnTask(teaDao).execute(tea);
     }
 
     public void delete(Tea tea) {
-        new InsertTeaAsycnTask(teaDao).execute(tea);
+        new DeleteTeaAsycnTask(teaDao).execute(tea);
     }
 
     public void deleteAllTea() {
-        new InsertTeaAsycnTask(teaDao).execute();
+        new DeleteAllTeaAsycnTask(teaDao).execute();
     }
 
     public LiveData<List<Tea>> getAllTea() {
