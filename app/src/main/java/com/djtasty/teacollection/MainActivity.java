@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Swipe to delete Teas from list
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override

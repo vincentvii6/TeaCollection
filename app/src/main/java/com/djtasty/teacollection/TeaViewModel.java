@@ -12,6 +12,9 @@ public class TeaViewModel extends AndroidViewModel {
     private TeaRepository repository;
     private LiveData<List<Tea>> allTea;
 
+
+    // ViewModel for LiveData
+
     public TeaViewModel(@NonNull Application application) {
         super(application);
         repository = new TeaRepository(application);

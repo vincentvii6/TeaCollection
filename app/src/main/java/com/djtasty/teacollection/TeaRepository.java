@@ -11,6 +11,8 @@ public class TeaRepository {
     private TeaDao teaDao;
     private LiveData<List<Tea>> allTea;
 
+    // Repository to access DB and pass information to ViewModel
+
     public TeaRepository(Application application) {
         TeaDatabase database = TeaDatabase.getInstance(application);
         teaDao = database.teaDao();

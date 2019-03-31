@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+// DB to store Teas that are created
 
 @Database(entities = Tea.class, version = 1, exportSchema = false)
 public abstract class TeaDatabase extends RoomDatabase {
@@ -42,6 +43,8 @@ public abstract class TeaDatabase extends RoomDatabase {
         private PopulateDbAsyncTask(TeaDatabase db) {
             teaDao = db.teaDao();
         }
+
+        // Default Teas to populate List for Testing
 
         @Override
         protected Void doInBackground(Void... voids){

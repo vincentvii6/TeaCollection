@@ -23,6 +23,8 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
         return new TeaHolder(itemView);
     }
 
+    // Set information to fields before sending to ViewHolder
+
     @Override
     public void onBindViewHolder(@NonNull TeaHolder holder, int position) {
         Tea currentTea = teas.get(position);
@@ -51,6 +53,7 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
         private TextView textViewType;
         private TextView textViewQuantity;
 
+        // Set information in ViewHolder
 
         public TeaHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,7 +73,7 @@ public class TeaAdapter extends RecyclerView.Adapter<TeaAdapter.TeaHolder> {
         }
     }
 
-    // Edit Tea
+    // Edit Tea by clicking list item
 
     public interface OnItemClickListener {
         void onItemClick(Tea tea);

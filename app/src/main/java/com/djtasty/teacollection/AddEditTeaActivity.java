@@ -25,6 +25,7 @@ public class AddEditTeaActivity extends AppCompatActivity {
     private EditText editTextType;
     private NumberPicker numberPickerQuantity;
 
+    // Set fields for user information
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

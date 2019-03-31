@@ -3,6 +3,8 @@ package com.djtasty.teacollection;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// Tea Object
+
 @Entity(tableName = "tea_collection_table" )
 public class Tea {
 
